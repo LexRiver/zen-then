@@ -1,4 +1,3 @@
-
 function zen(){
     //var debug = console.log;
     var debug = function(){};
@@ -12,18 +11,17 @@ function zen(){
     z._allWarningsHandler = null;
 
 
-    z._isFunction = function(functionToCheck) {
+    z.isFunction = function(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     };
-    z._isString = function(p) {
+    z.isString = function(p) {
         return typeof p === "string" || p instanceof String;
     };
 
 
     z.return = function(result){
         debug('==> returning from function, got result: ', result);
-        //console.log('count of functions left: ', zen._arrayOfFunc.length);
         if (z._arrayOfFunc.length > 0) {
             //we have some more functions to execute
             z._executeNextFunction(result);//execute next function
@@ -36,14 +34,14 @@ function zen(){
 
     z.catch = function(exceptionHandler){
         debug('==> adding exception handler');
-        if(z._isFunction(exceptionHandler)){
+        if(z.isFunction(exceptionHandler)){
             z._exceptionHandler = exceptionHandler;
         }
     };
 
     z._executeExceptionHandlerIfExists = function(exception){
         debug('==> executing exception handler or throw');
-        if(z._isFunction(z._exceptionHandler)){
+        if(z.isFunction(z._exceptionHandler)){
             z._exceptionHandler(exception);
 
         } else {
@@ -67,7 +65,7 @@ function zen(){
     z._executeNextFunction = function(p){
         debug('==> execute next function');
         var nextFunction = z._arrayOfFunc.shift();
-        if (z._isFunction(nextFunction)) {
+        if (z.isFunction(nextFunction)) {
             try {
                 nextFunction(p);
             } catch(e) {
@@ -107,7 +105,7 @@ function zen(){
 
     z.eachWarning = function(warningHandler) {
         debug('==> assign eachWarningHandler');
-        if (z._isFunction(warningHandler)) {
+        if (z.isFunction(warningHandler)) {
             z._eachWarningHandler = warningHandler;
         }
         return this;
@@ -115,7 +113,7 @@ function zen(){
 
     z.getAllWarnings = function(warningsHandler) {
         debug('==> assign allWarningsHandler');
-        if (z._isFunction(warningsHandler)) {
+        if (z.isFunction(warningsHandler)) {
             z._allWarningsHandler = warningsHandler;
         }
         return this;

@@ -24,3 +24,12 @@ z.then(function(){
 
 });
 ```
+
+It's important to explicitly call `return z.return('any return value')` after each function.
+A return value can be a string, number, object or even function.
+There must be only one return value. You can create an object if you want to return few values:
+```
+{ param1: 'value1', param2: value2 }
+```
+
+## Exception handling

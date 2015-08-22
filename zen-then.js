@@ -1,3 +1,4 @@
+
 function zen(){
     //var debug = console.log;
     var debug = function(){};
@@ -21,7 +22,7 @@ function zen(){
 
 
     z.return = function(result){
-        debug('==> returning from function, got result: ', result);
+        debug('\t returning from function, got result: ', result);
         if (z._arrayOfFunc.length > 0) {
             //we have some more functions to execute
             z._executeNextFunction(result);//execute next function
@@ -33,14 +34,14 @@ function zen(){
     z.ok = z.return;
 
     z.catch = function(exceptionHandler){
-        debug('==> adding exception handler');
+        debug('\t adding exception handler');
         if(z.isFunction(exceptionHandler)){
             z._exceptionHandler = exceptionHandler;
         }
     };
 
     z._executeExceptionHandlerIfExists = function(exception){
-        debug('==> executing exception handler or throw');
+        debug('\t executing exception handler or throw');
         if(z.isFunction(z._exceptionHandler)){
             z._exceptionHandler(exception);
 
@@ -52,18 +53,22 @@ function zen(){
     };
 
     z.then = function(nextFunction) {
-        debug('==> adding next function');
+        debug('\t adding next function');
         z._arrayOfFunc.push(nextFunction);
+
         if (z._isStarted == false) {
-            debug('==> executing first function');
             z._isStarted = true;
-            z._executeNextFunction();
+            setTimeout(function(){
+                debug('\t execution is started, executing first function');
+                z._executeNextFunction();
+
+            }, 1);
         }
         return this;
     };
 
     z._executeNextFunction = function(p){
-        debug('==> execute next function');
+        debug('\t execute next function with parameter: ', p);
         var nextFunction = z._arrayOfFunc.shift();
         if (z.isFunction(nextFunction)) {
             try {
@@ -73,12 +78,14 @@ function zen(){
                 z._executeExceptionHandlerIfExists(e);
             }
         } else {
+            debug('\t next function is not a function, stopping execution');
             z._stopExecution();
+
         }
     };
 
     z._stopExecution = function() {
-        debug('==> stop execution');
+        debug('\t stop execution');
         // handle warnings
         if (z._eachWarningHandler) {
             for (var warningIndex in z._arrayOfWarnings) {
@@ -98,13 +105,13 @@ function zen(){
 
 
     z.addWarning = function(warningMessage) {
-        debug('==> adding warning ', warningMessage);
+        debug('\t adding warning ', warningMessage);
         z._arrayOfWarnings.push(warningMessage);
     };
     z.warning = z.addWarning;
 
     z.eachWarning = function(warningHandler) {
-        debug('==> assign eachWarningHandler');
+        debug('\t assign eachWarningHandler');
         if (z.isFunction(warningHandler)) {
             z._eachWarningHandler = warningHandler;
         }
@@ -112,7 +119,7 @@ function zen(){
     };
 
     z.getAllWarnings = function(warningsHandler) {
-        debug('==> assign allWarningsHandler');
+        debug('\t assign allWarningsHandler');
         if (z.isFunction(warningsHandler)) {
             z._allWarningsHandler = warningsHandler;
         }

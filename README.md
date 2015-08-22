@@ -68,7 +68,7 @@ Method `.catch(function(exception){ ... }` can catch usual exception, but only f
 
 ## Warnings
 You can throw warning messages with `z.warning('message')` and catch them later with 
-`.eachWarning(function(warning){ ... }` or with `.getAllWarnings(function(allWarnings){ ... }`.
+`.eachWarning(function(warning){ ... })` or with `.getAllWarnings(function(allWarnings){ ... })`.
 All warnings handling occurs after all functions will be executed or before any exception handling.
 
 ```
@@ -106,4 +106,23 @@ z.then(function(){
     }
 });
 ```
+
+## Named functions
+You can use named functions if you want
+```
+var z = zen();
+
+z.then(function myFirstFunction(){
+    return z.return(1);
+
+}).then(function mySecondFunction(x){
+    console.log(x);
+    return z.return();
+    
+});
+```
+
+## Some aliases
+Alias for `return z.result(...)` is `return z.ok(...)`.
+And alias for `return  z.exception(...)` is `return z.fail(...)`.
 

@@ -45,6 +45,7 @@ function zen(){
         if(z.isFunction(exceptionHandler)){
             z._exceptionHandler = exceptionHandler;
         }
+        return this;
     };
 
     z._executeExceptionHandlerIfExists = function(exception){

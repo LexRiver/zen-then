@@ -33,6 +33,13 @@ function zen(){
     z.result = z.return;
     z.ok = z.return;
 
+    z.exception = function(exception){
+        debug('\t throwing exception from function');
+        z._stopExecution();
+        z._executeExceptionHandlerIfExists(exception);
+    };
+    z.fail = z.exception;
+
     z.catch = function(exceptionHandler){
         debug('\t adding exception handler');
         if(z.isFunction(exceptionHandler)){
@@ -71,7 +78,7 @@ function zen(){
         debug('\t execute next function with parameter: ', p);
         var nextFunction = z._arrayOfFunc.shift();
         if (z.isFunction(nextFunction)) {
-            try {
+            try { // with try we can catch exception only for sync function
                 nextFunction(p);
             } catch(e) {
                 z._stopExecution();

@@ -26,10 +26,20 @@ z.then(function(){
 ```
 
 It's important to explicitly call `return z.return('any return value')` after each function.
-A return value can be a string, number, object or even function.
-There must be only one return value. You can create an object if you want to return few values:
+A return value can be of any type.
+
+You can return few number of values and use them in the next function
 ```
-z.return({ param1: 'value1', param2: 'value2' })
+var z = zen();
+z.then(function(){
+    return z.result(1,2,3);
+
+}).then(function(a,b,c){
+    console.log(a,b,c);
+    return z.result();
+    
+});
+
 ```
 
 

@@ -52,13 +52,17 @@ function zen(){
 
     /**
      * return from a function and execute next function if exists
-     * @param result
      */
-    z.return = function(result){
-        debug('\t returning from function, got result: ', result);
+    z.return = function(){
+        debug('\t returning from function, got '+arguments.length+' results ');
+        //for(var i in arguments){
+        //    debug('\t '+arguments[i]);
+        //}
+
         if (z._arrayOfFunc.length > 0) {
             //we have some more functions to execute
-            z._executeNextFunction(result);//execute next function
+            z._executeNextFunction.apply(this, arguments);//execute next function
+
         } else {
             z._stopExecution();
         }
@@ -122,12 +126,16 @@ function zen(){
         return this;
     };
 
-    z._executeNextFunction = function(p){
-        debug('\t execute next function with parameter: ', p);
+    z._executeNextFunction = function(){
+        debug('\t execute next function with '+arguments.length+' parameters ');
+        //for(var i in arguments){
+        //    debug('\t '+arguments[i]);
+        //}
+
         var nextFunction = z._arrayOfFunc.shift();
         if (z.isFunction(nextFunction)) {
             try { // with try we can catch exception only for sync function
-                nextFunction(p);
+                nextFunction.apply(this, arguments);
             } catch (e) {
                 z._stopExecution();
                 z._executeExceptionHandlerIfExists(e);

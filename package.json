@@ -1,0 +1,40 @@
+{
+  "name": "zen-then",
+  "version": "2015.08.23",
+  "description": "control-flow tool that allows execution of async code step by step",
+  "main": "zen-then.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LexRiver/zen-then.git"
+  },
+  "keywords": [
+    "control",
+    "flow",
+    "async",
+    "sync",
+    "asynchronous",
+    "synchronous",
+    "step",
+    "by",
+    "step",
+    "series",
+    "flat",
+    "callback",
+    "exception",
+    "handling",
+    "warning",
+    "zen",
+    "then",
+    "zen-then",
+    "promise"
+  ],
+  "author": "LexRiver <LexRiver@gmail.com> (https://github.com/LexRiver/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LexRiver/zen-then/issues"
+  },
+  "homepage": "https://github.com/LexRiver/zen-then#readme"
+}

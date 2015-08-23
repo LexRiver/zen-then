@@ -28,7 +28,7 @@ z.then(function(){
 It's important to explicitly call `return z.return('any return value')` after each function.
 A return value can be of any type.
 
-You can return few number of values and use them in the next function
+You can also return few number of values and use them in the next function
 ```
 var z = zen();
 z.then(function(){

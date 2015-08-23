@@ -107,6 +107,7 @@ z.then(function(){
 });
 ```
 
+
 ## Named functions
 You can use named functions if you want
 ```
@@ -122,7 +123,9 @@ z.then(function myFirstFunction(){
 });
 ```
 
+
 ## Some aliases
 Alias for `return z.result(...)` is `return z.ok(...)`.
+
 And alias for `return  z.exception(...)` is `return z.fail(...)`.
 

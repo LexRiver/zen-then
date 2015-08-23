@@ -12,15 +12,48 @@ function zen(){
     z._allWarningsHandler = null;
 
 
+    // ---
+
+
+    /**
+     * Helper function: checks if argument is a function
+     * @param functionToCheck
+     * @returns {boolean}
+     */
     z.isFunction = function(functionToCheck) {
         var getType = {};
         return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
     };
+
+    /**
+     * Helper function: checks if argument is a string
+     * @param p
+     * @returns {boolean}
+     */
     z.isString = function(p) {
         return typeof p === "string" || p instanceof String;
     };
 
+    /**
+     * Helper function: clone object using a shallow copy
+     * @param obj
+     * @returns {{}}
+     */
+    z.clone = function(obj){
+        var result = {};
+        for (var i in obj) {
+            if (obj.hasOwnProperty(i)) {
+                result[i] = obj[i];
+            }
+        }
+        return result;
+    };
 
+
+    /**
+     * return from a function and execute next function if exists
+     * @param result
+     */
     z.return = function(result){
         debug('\t returning from function, got result: ', result);
         if (z._arrayOfFunc.length > 0) {
@@ -33,6 +66,10 @@ function zen(){
     z.result = z.return;
     z.ok = z.return;
 
+    /**
+     * return from a function with an exception
+     * @param exception
+     */
     z.exception = function(exception){
         debug('\t throwing exception from function');
         z._stopExecution();
@@ -40,6 +77,11 @@ function zen(){
     };
     z.fail = z.exception;
 
+    /**
+     * create exception handler
+     * @param exceptionHandler
+     * @returns {z}
+     */
     z.catch = function(exceptionHandler){
         debug('\t adding exception handler');
         if(z.isFunction(exceptionHandler)){
@@ -60,6 +102,11 @@ function zen(){
         }
     };
 
+    /**
+     * add new function to be executed
+     * @param nextFunction
+     * @returns {z}
+     */
     z.then = function(nextFunction) {
         debug('\t adding next function');
         z._arrayOfFunc.push(nextFunction);
@@ -81,10 +128,11 @@ function zen(){
         if (z.isFunction(nextFunction)) {
             try { // with try we can catch exception only for sync function
                 nextFunction(p);
-            } catch(e) {
+            } catch (e) {
                 z._stopExecution();
                 z._executeExceptionHandlerIfExists(e);
             }
+
         } else {
             debug('\t next function is not a function, stopping execution');
             z._stopExecution();
@@ -111,13 +159,21 @@ function zen(){
 
     };
 
-
+    /**
+     * add a warning
+     * @param warningMessage
+     */
     z.addWarning = function(warningMessage) {
         debug('\t adding warning ', warningMessage);
         z._arrayOfWarnings.push(warningMessage);
     };
     z.warning = z.addWarning;
 
+    /**
+     * create warnings handler, will be executed for each warning
+     * @param warningHandler
+     * @returns {z}
+     */
     z.eachWarning = function(warningHandler) {
         debug('\t assign eachWarningHandler');
         if (z.isFunction(warningHandler)) {
@@ -126,6 +182,11 @@ function zen(){
         return this;
     };
 
+    /**
+     * create warnings handler
+     * @param warningsHandler
+     * @returns {z}
+     */
     z.getAllWarnings = function(warningsHandler) {
         debug('\t assign allWarningsHandler');
         if (z.isFunction(warningsHandler)) {
@@ -133,6 +194,8 @@ function zen(){
         }
         return this;
     };
+
+
 
 
     return z;

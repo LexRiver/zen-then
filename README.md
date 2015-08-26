@@ -7,20 +7,20 @@ var z = zen();
 
 z.then(function(){
     console.log('1...');
-    return z.return('one');
+    return z.result('one');
 
 }).then(function(x){
     console.log('2...');
     console.log('1st function result: ', x);
     setTimeout(function(){
         console.log('x=', x);
-        return z.return(x+' plus one');
+        return z.result(x+' plus one');
     }, 1000);
 
 }).then(function(x){
     console.log('3...');
     console.log('result from second function: ', x);
-    return z.return();
+    return z.result();
 
 });
 ```
@@ -51,7 +51,7 @@ var z = zen();
 
 z.then(function(){
     console.log('1...');
-    return z.return('one');
+    return z.result('one');
 
 }).then(function(x){
     console.log('2...');
@@ -59,7 +59,7 @@ z.then(function(){
     setTimeout(function(){
         console.log('x=', x);
         return z.exception('X');
-        //return z.return(x+' plus one');
+        //return z.result(x+' plus one');
     }, 1000);
 
 }).then(function(x){
@@ -135,7 +135,7 @@ z.then(function myFirstFunction(){
 
 
 ## Some aliases
-Alias for `return z.result(...)` is `return z.ok(...)`.
+Aliases for `return z.result(...)` are `return z.ok(...)` and `return z.return(...)`
 
 And alias for `return  z.exception(...)` is `return z.fail(...)`.
 

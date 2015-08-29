@@ -25,7 +25,7 @@ z.then(function(){
 });
 ```
 
-It's important to explicitly call `return z.return('any return value')` after each function.
+It's important to explicitly call `return z.result('any return value')` after each function.
 A return value can be of any type.
 
 You can also return few number of values and use them in the next function
@@ -66,14 +66,14 @@ z.then(function(){
     // this function will not be executed
     console.log('3...');
     console.log('result from second function: ', x);
-    return z.return();
+    return z.result();
 
 }).catch(function(exception){
     console.log('catching exception: ', exception);
 
 });
 ```
-Method `.catch(function(exception){ ... }` can catch usual exception, but only for synchronous functions.
+Method `.catch(function(exception){ ... }` can catch usual exception also, but only for synchronous functions.
 
 
 ## Warnings
@@ -87,7 +87,7 @@ var z = zen();
 z.then(function(){
     console.log('1...');
     z.warning('my warning');
-    return z.return('one');
+    return z.result('one');
 
 }).then(function(x){
     console.log('2...');
@@ -95,13 +95,13 @@ z.then(function(){
     setTimeout(function(){
         console.log('x=', x);
         z.warning('my another warning');
-        return z.return(x+' plus one');
+        return z.result(x+' plus one');
     }, 1000);
 
 }).then(function(x){
     console.log('3...');
     console.log('result from second function: ', x);
-    return z.return();
+    return z.result();
 
 }).catch(function(exception){
     console.log('catching exception: ', exception);
@@ -124,11 +124,11 @@ You can use named functions if you want
 var z = zen();
 
 z.then(function myFirstFunction(){
-    return z.return(1);
+    return z.result(1);
 
 }).then(function mySecondFunction(x){
     console.log(x);
-    return z.return();
+    return z.result();
     
 });
 ```

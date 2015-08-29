@@ -1,6 +1,6 @@
 {
   "name": "zen-then",
-  "version": "2015.08.29",
+  "version": "2015.08.30",
   "description": "control-flow tool that allows execution of async code step by step",
   "main": "zen-then.js",
   "scripts": {

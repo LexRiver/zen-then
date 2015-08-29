@@ -44,8 +44,9 @@ z.then(function(){
 
 
 ## Exception handling
-Execute `return z.exception('my exception')` to throw exception and stop execution.
-Use `.catch(function(exception){ ... })` method to catch any exception.
+Execute `return z.exception(myExceptionObject)` to throw exception and stop execution. 
+This is not the same exception as in `throw myException`.
+Use `.catch(function(exception){ ... })` method to catch exception from any function.
 ```
 var z = zen();
 

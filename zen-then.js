@@ -1,6 +1,6 @@
 
 function zen(){
-    //var debug = console.log;
+    //var log = console.log;
     var debug = function(){};
     var z = {};
     z._arrayOfFunc = [];
@@ -56,7 +56,7 @@ function zen(){
     z.return = function(){
         debug('\t returning from function, got '+arguments.length+' results ');
         //for(var i in arguments){
-        //    debug('\t '+arguments[i]);
+        //    log('\t '+arguments[i]);
         //}
 
         if (z._arrayOfFunc.length > 0) {
@@ -80,6 +80,7 @@ function zen(){
         z._executeExceptionHandlerIfExists(exception);
     };
     z.fail = z.exception;
+    z.error = z.exception;
 
     /**
      * create exception handler
@@ -129,7 +130,7 @@ function zen(){
     z._executeNextFunction = function(){
         debug('\t execute next function with '+arguments.length+' parameters ');
         //for(var i in arguments){
-        //    debug('\t '+arguments[i]);
+        //    log('\t '+arguments[i]);
         //}
 
         var nextFunction = z._arrayOfFunc.shift();

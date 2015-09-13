@@ -27,6 +27,7 @@ z.then(function(){
 
 It's important to explicitly call `return z.result('any return value')` after each function.
 A return value can be of any type.
+Aliases for `return z.result(...)` are `return z.ok(...)` and `return z.return(...)`.
 
 You can also return few number of values and use them in the next function
 ```
@@ -75,6 +76,9 @@ z.then(function(){
 });
 ```
 Method `.catch(function(exception){ ... }` can catch usual exception also, but only for synchronous functions.
+
+Alias for `.catch` is `.onError`, for example `.onError(function(error){ ... });`
+And aliases for `return  z.exception(...)` are `return z.error(...)` and  `return z.fail(...)`.
 
 
 ## Warnings
@@ -134,9 +138,4 @@ z.then(function myFirstFunction(){
 });
 ```
 
-
-## Some aliases
-Aliases for `return z.result(...)` are `return z.ok(...)` and `return z.return(...)`
-
-And alias for `return  z.exception(...)` is `return z.fail(...)`.
 

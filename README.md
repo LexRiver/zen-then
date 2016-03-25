@@ -2,8 +2,8 @@
 javascript control-flow tool that allows execution of async code step by step.
 
 ## How to use
-```
-var z = zen();
+```javascript
+var z = require('zen-then')();
 
 z.then(function(){
     console.log('1...');
@@ -25,15 +25,17 @@ z.then(function(){
 });
 ```
 
-It's important to explicitly call `return z.result('any return value')` after each function.
-A return value can be of any type.
-
-Aliases for `return z.result(...)` are `return z.ok(...)` and `return z.return(...)`.
-
-
-You can also return few number of values and use them in the next function
+It's important to explicitly call `return z.result(...)` after each function. 
+```javascript
+return z.result('some return value');
+return z.result('string',123,x); //few values can be returned
+return z.result(); //just continue to the next function
 ```
-var z = zen();
+
+
+To use returned values in the next function:
+```javascript
+var z = require('zen-then')();
 z.then(function(){
     return z.result(1,2,3);
 
@@ -46,12 +48,20 @@ z.then(function(){
 ```
 
 
+There are some aliases for z.result():
+```javascript
+return z.result(...);
+return z.ok(...); //same as z.result(...);
+return z.return(...); //same as z.result(...);
+```
+
+
 ## Exception handling
 Execute `return z.exception(myExceptionObject)` to throw exception and stop execution. 
 This is not the same exception as in `throw myException`.
 Use `.catch(function(exception){ ... })` method to catch exception from any function.
-```
-var z = zen();
+```javascript
+var z = require('zen-then')();
 
 z.then(function(){
     console.log('1...');
@@ -62,8 +72,7 @@ z.then(function(){
     console.log('1st function result: ', x);
     setTimeout(function(){
         console.log('x=', x);
-        return z.exception('X');
-        //return z.result(x+' plus one');
+        return z.exception('X'); //let's throw exception
     }, 1000);
 
 }).then(function(x){
@@ -77,11 +86,21 @@ z.then(function(){
 
 });
 ```
-Method `.catch(function(exception){ ... }` can catch usual exception also, but only for synchronous functions.
+Method `.catch(function(exception){ ... }` can catch usual exception also, but only for synchronous functions. 
+So you must exlicitly call `return z.exception(...)` when hadling usual exception in asynchronous functions.
 
-Alias for `.catch` is `.onError`, for example `.onError(function(error){ ... });`.
+Aliases for `return  z.exception(...)`.
+```javascript
+return z.exception(x);
+return z.error(x); //same
+return z.fail(x); //same
+```
 
-And aliases for `return  z.exception(...)` are `return z.error(...)` and  `return z.fail(...)`.
+Alias for `.catch` is `.onError`:
+```javascript
+.catch(function(exception){ ... });
+.onError(function(exception){ ... }); //same
+```
 
 
 ## Warnings
@@ -89,8 +108,8 @@ You can throw warning messages with `z.warning('message')` and catch them later 
 `.eachWarning(function(warning){ ... })` or with `.getAllWarnings(function(allWarnings){ ... })`.
 All warnings handling occurs after all functions will be executed or before any exception handling.
 
-```
-var z = zen();
+```javascript
+var z = require('zen-then')();
 
 z.then(function(){
     console.log('1...');
@@ -127,9 +146,9 @@ z.then(function(){
 
 
 ## Named functions
-You can use named functions if you want
-```
-var z = zen();
+You can use named functions
+```javascript
+var z = require('zen-then')();
 
 z.then(function myFirstFunction(){
     return z.result(1);
